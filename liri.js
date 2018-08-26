@@ -13,16 +13,17 @@ var moviekey = apikeys.omdb;
 // initialize request handler
 var request = require("request");
 
+// initialize file handler
+var fs = require("fs")
 
 
 
+// console.log(apikeys.spotify);
+// console.log("\n\n\n")
+// console.log(moviekey)
+// console.log("-----begin program\n")
 
-console.log(apikeys.spotify);
-console.log("\n\n\n")
-console.log(moviekey)
-console.log("-----begin program\n")
 var nodeArgs = process.argv
-
 var helpMessage = "Please use one of these four commands\n 1) concert-this\n 2) spotify-this-song\n 3) movie-this\n 4) do-what-it-says\n"
 
 if (nodeArgs.length < 3) {
@@ -35,7 +36,11 @@ if (nodeArgs.length < 3) {
     commandArgString = commandArgString.trim()
     console.log("Length: " + nodeArgs.length + "\nCommand: " + command + "\nParameters: " + commandArgString)
 
+    selectChoice(command, commandArgString)
+}
 
+
+function selectChoice(command, commandArgString) {
     switch (command) {
         case "concert-this":
             console.log("concert-this");
@@ -56,8 +61,9 @@ if (nodeArgs.length < 3) {
         default:
             console.log(helpMessage)
     }
-
 }
+
+
 
 
 // Make it so liri.js can take in one of the following commands:
@@ -74,17 +80,20 @@ if (nodeArgs.length < 3) {
 
 // node liri.js concert-this <artist/band name here>
 function concertThis(artist) {
-    console.log("\nIn function: \nHere is your band! " + artist);
+    //console.log("\nIn function: \nHere is your band! " + artist);
+
+    // If no band, nothign will be provided
     if (artist === "") {
-        console.log ("No Band, I can't provide venue information.")
+        console.log("No Band, I can't provide venue information.")
         return ("just starting all over")
     }
+
     // This will search the Bands in Town Artist Events API ("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp") for an artist and render the following information about each event to the terminal:
     request("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp", function (error, response, body) {
         let resultList = JSON.parse(body)
-        prettyOutput = JSON.stringify(resultList, null, 4)
-        console.log(prettyOutput)
-        console.log("-------------------------------------------------------------")
+        //prettyOutput = JSON.stringify(resultList, null, 4)
+        //console.log(prettyOutput)
+        //console.log("-------------------------------------------------------------")
         let allresults = ""
         for (let i = 0; i < resultList.length; i++) {
             let result = ""
@@ -106,14 +115,16 @@ function concertThis(artist) {
 
 // node liri.js spotify-this-song '<song name here>'
 function spotifySong(song) {
-    console.log("\nIn function: \nHere is your song! " + song)
+    //console.log("\nIn function: \nHere is your song! " + song)
+
+    // If no song is provided then your program will default to "The Sign" by Ace of Base.
     if (song === "") {
         song = "The Sign"
     }
 
     var searchLimit = 10
 
-    spotify.search({ type: 'track', query: song, limit: searchLimit}, function (err, data) {
+    spotify.search({ type: 'track', query: song, limit: searchLimit }, function (err, data) {
         // console.log(data)
         // console.log(JSON.stringify(data, null, 2))
         results = data['tracks']['items']
@@ -147,6 +158,9 @@ function movieThis(movie) {
     console.log("\nIn function: \nHere is your movie " + movie)
     // This will output the following information to your terminal/bash window:
 
+    // If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
+    // If you haven't watched "Mr. Nobody," then you should: http://www.imdb.com/title/tt0485947/
+    // It's on Netflix!
     if (movie === "") {
         movie = "Mr. Nobody"
     }
@@ -154,7 +168,7 @@ function movieThis(movie) {
     request("http://omdbapi.com?apikey=" + moviekey + "&type=movie&t=" + movie, function (error, response, body) {
 
         searchResults = JSON.parse(body)
-        console.log(searchResults);
+        //console.log(searchResults);
         //    * Title of the movie.
         title = searchResults['Title']
 
@@ -167,7 +181,7 @@ function movieThis(movie) {
         let rottenTomRating = "N/A"
 
         let ratings = searchResults['Ratings']
-        for (let i = 0; i<ratings.length; i++) {
+        for (let i = 0; i < ratings.length; i++) {
             if (ratings[i]['Source'] === 'Internet Movie Database') {
                 imdbRating = ratings[i]['Value']
             } else if (ratings[i]['Source'] === 'Rotten Tomatoes') {
@@ -175,7 +189,7 @@ function movieThis(movie) {
             }
 
         }
-   
+
 
         //    * Country where the movie was produced.
         let country = searchResults['Country']
@@ -189,14 +203,12 @@ function movieThis(movie) {
         console.log(title, yearOut, imdbRating, rottenTomRating, country, language)
         console.log(actors)
         console.log(plot)
-        
+
     });
 
-    // If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
-    // If you haven't watched "Mr. Nobody," then you should: http://www.imdb.com/title/tt0485947/
-    // It's on Netflix!
 
-    // You'll use the request package to retrieve data from the OMDB API. Like all of the in-class activities, the OMDB API requires an API key. You may use trilogy.
+
+
 
 }
 
@@ -204,10 +216,26 @@ function movieThis(movie) {
 
 
 // node liri.js do-what-it-says
-function doWhatItSays(textfile) {
-    console.log("\nIn function: \nHere is command file " + textfile)
+function doWhatItSays() {
+    //console.log("\nIn function do-what-it-says\n")
     // Using the fs Node package, LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands.
 
+    fs.readFile("./random.txt", "utf8", function (err, data) {
+        //console.log(data);
+        data = data.trim();
+
+        // check for any commands
+        if (data !== "") {
+            commandArray = data.split(",")
+            //console.log(commandArray)
+            //console.log("length: "+commandArray.length)
+            selectChoice(commandArray[0], commandArray[1])
+        } else {
+            console.log("Didn't see any commands in text file")
+            console.log(helpMessage)
+        }
+
+    })
     // It should run spotify-this-song for "I Want it That Way," as follows the text in random.txt.
     // Feel free to change the text in that document to test out the feature for other commands.
 
