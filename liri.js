@@ -30,11 +30,11 @@ if (nodeArgs.length < 3) {
     console.log("Missing command");
     console.log(helpMessage)
 } else {
-
+    // console.log("\n\n")
     let command = nodeArgs[2]
     let commandArgString = nodeArgs.slice(3).join(" ");
     commandArgString = commandArgString.trim()
-    console.log("Length: " + nodeArgs.length + "\nCommand: " + command + "\nParameters: " + commandArgString)
+    // console.log("Length: " + nodeArgs.length + "\nCommand: " + command + "\nParameters: " + commandArgString)
 
     selectChoice(command, commandArgString)
 }
@@ -43,22 +43,23 @@ if (nodeArgs.length < 3) {
 function selectChoice(command, commandArgString) {
     switch (command) {
         case "concert-this":
-            console.log("concert-this");
+            //console.log("concert-this");
             concertThis(commandArgString);
             break;
         case "spotify-this-song":
-            console.log("spotify-this-song");
+            //console.log("spotify-this-song");
             spotifySong(commandArgString);
             break;
         case "movie-this":
-            console.log("movie-this");
+            //console.log("movie-this");
             movieThis(commandArgString)
             break;
         case "do-what-it-says":
-            console.log("do-what-it-says");
+            //console.log("do-what-it-says");
             doWhatItSays(commandArgString)
             break;
         default:
+            console.log("Could not Recognize Commands\n")
             console.log(helpMessage)
     }
 }
@@ -94,18 +95,21 @@ function concertThis(artist) {
         //prettyOutput = JSON.stringify(resultList, null, 4)
         //console.log(prettyOutput)
         //console.log("-------------------------------------------------------------")
-        let allresults = ""
-        for (let i = 0; i < resultList.length; i++) {
-            let result = ""
-            venueName = resultList[i]["venue"]["name"]
-            // clean up date later   
-            date = resultList[i]['datetime']
-            venueLoc = resultList[i]['venue']['city'] + " " + resultList[i]['venue']['country']
-            eventInfo = "Name: " + venueName + "\nLocation: " + venueLoc + "\nDate: " + date + "\n\n";
-            allresults = allresults + eventInfo;
+        if (resultList.length === 0) {
+            console.log("Sorry.  Couldn't find any events by "+artist)
+        } else {
+            let allresults = ""
+            for (let i = 0; i < resultList.length; i++) {
+                let result = ""
+                venueName = resultList[i]["venue"]["name"]
+                // clean up date later   
+                date = resultList[i]['datetime']
+                venueLoc = resultList[i]['venue']['city'] + " " + resultList[i]['venue']['country']
+                eventInfo = "Name: " + venueName + "\nLocation: " + venueLoc + "\nDate: " + date + "\n\n";
+                allresults = allresults + eventInfo;
+            }
+            console.log("\n\n" + allresults)
         }
-        console.log("\n\n" + allresults)
-        // console.log(prettyOutput)
     });
     // Name of the venue
     // Venue location
@@ -127,25 +131,31 @@ function spotifySong(song) {
     spotify.search({ type: 'track', query: song, limit: searchLimit }, function (err, data) {
         // console.log(data)
         // console.log(JSON.stringify(data, null, 2))
-        results = data['tracks']['items']
-        let display = "";
-        for (i = 0; i < results.length; i++) {
-            let result = "";
-            // This will show the following information about the song in your terminal/bash window
-            // Artist(s)
-            // The song's name
-            // A preview link of the song from Spotify
-            // The album that the song is from
-            // If no song is provided then your program will default to "The Sign" by Ace of Base.
-            artist = results[i]['album']["artists"][0]['name']
-            songName = results[i]['name']
-            albumName = results[i]['album']['name']
-            prevLink = results[i]['preview_url']
 
-            console.log("Artist: " + artist + "\nSongName: " + songName + "\nAlbum: " + albumName)
-            console.log("Preview Link: " + prevLink + "\n")
-            // console.log(results[i]['album'])
+        if (data['tracks']['total'] > 1) {
+            results = data['tracks']['items']
+            let display = "";
+            for (i = 0; i < results.length; i++) {
+                let result = "";
+                // This will show the following information about the song in your terminal/bash window
+                // Artist(s)
+                // The song's name
+                // A preview link of the song from Spotify
+                // The album that the song is from
+                // If no song is provided then your program will default to "The Sign" by Ace of Base.
+                artist = results[i]['album']["artists"][0]['name']
+                songName = results[i]['name']
+                albumName = results[i]['album']['name']
+                prevLink = results[i]['preview_url']
+
+                console.log("Artist: " + artist + "\nSongName: " + songName + "\nAlbum: " + albumName)
+                console.log("Preview Link: " + prevLink + "\n")
+                // console.log(results[i]['album'])
+            }
+        } else {
+            console.log("Sorry. No songs found by the name: "+song)
         }
+
     })
 }
 
@@ -155,7 +165,7 @@ function spotifySong(song) {
 
 // node liri.js movie-this '<movie name here>'
 function movieThis(movie) {
-    console.log("\nIn function: \nHere is your movie " + movie)
+    // console.log("\nIn function: \nHere is your movie " + movie)
     // This will output the following information to your terminal/bash window:
 
     // If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
@@ -168,41 +178,47 @@ function movieThis(movie) {
     request("http://omdbapi.com?apikey=" + moviekey + "&type=movie&t=" + movie, function (error, response, body) {
 
         searchResults = JSON.parse(body)
-        //console.log(searchResults);
-        //    * Title of the movie.
-        title = searchResults['Title']
+        // console.log(searchResults);
 
-        //    * Year the movie came out.
-        yearOut = searchResults['Year']
+        if (searchResults['Response'] === "True") {
 
-        //    * IMDB Rating of the movie.   
-        //    * Rotten Tomatoes Rating of the movie.
-        let imdbRating = "N/A"
-        let rottenTomRating = "N/A"
+            //    * Title of the movie.
+            title = searchResults['Title']
 
-        let ratings = searchResults['Ratings']
-        for (let i = 0; i < ratings.length; i++) {
-            if (ratings[i]['Source'] === 'Internet Movie Database') {
-                imdbRating = ratings[i]['Value']
-            } else if (ratings[i]['Source'] === 'Rotten Tomatoes') {
-                rottenTomRating = ratings[i]['Value']
+            //    * Year the movie came out.
+            yearOut = searchResults['Year']
+
+            //    * IMDB Rating of the movie.   
+            //    * Rotten Tomatoes Rating of the movie.
+            let imdbRating = "N/A"
+            let rottenTomRating = "N/A"
+
+            let ratings = searchResults['Ratings']
+            for (let i = 0; i < ratings.length; i++) {
+                if (ratings[i]['Source'] === 'Internet Movie Database') {
+                    imdbRating = ratings[i]['Value']
+                } else if (ratings[i]['Source'] === 'Rotten Tomatoes') {
+                    rottenTomRating = ratings[i]['Value']
+                }
+
             }
 
+
+            //    * Country where the movie was produced.
+            let country = searchResults['Country']
+            //    * Language of the movie.
+            let language = searchResults['Language']
+            //    * Plot of the movie.
+            let plot = searchResults['Plot']
+            //    * Actors in the movie.
+            let actors = searchResults['Actors']
+
+            console.log(title, yearOut, imdbRating, rottenTomRating, country, language)
+            console.log(actors)
+            console.log(plot)
+        } else {
+            console.log("Sorry.  No Movie found by that name: "+movie)
         }
-
-
-        //    * Country where the movie was produced.
-        let country = searchResults['Country']
-        //    * Language of the movie.
-        let language = searchResults['Language']
-        //    * Plot of the movie.
-        let plot = searchResults['Plot']
-        //    * Actors in the movie.
-        let actors = searchResults['Actors']
-
-        console.log(title, yearOut, imdbRating, rottenTomRating, country, language)
-        console.log(actors)
-        console.log(plot)
 
     });
 
@@ -222,6 +238,13 @@ function doWhatItSays() {
 
     fs.readFile("./random.txt", "utf8", function (err, data) {
         //console.log(data);
+
+        if (err !== null) {
+            console.log("Stopped due to --> " + err)
+            return (false)
+        }
+
+
         data = data.trim();
 
         // check for any commands
@@ -229,6 +252,10 @@ function doWhatItSays() {
             commandArray = data.split(",")
             //console.log(commandArray)
             //console.log("length: "+commandArray.length)
+            if (commandArray[0] === "do-what-it-says") {
+                console.log("Sorry! Can't do that, that could possibly cause an infinite loop!")
+                return ("Sorry")
+            }
             selectChoice(commandArray[0], commandArray[1])
         } else {
             console.log("Didn't see any commands in text file")
