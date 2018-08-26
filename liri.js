@@ -16,6 +16,9 @@ var request = require("request");
 // initialize file handler
 var fs = require("fs")
 
+// initialize time handler
+var moment = require("moment")
+
 //  initialize log file
 var logfile = "./log.txt"
 
@@ -79,6 +82,7 @@ function selectChoice(command, commandArgString) {
 
 // node liri.js concert-this <artist/band name here>
 function concertThis(artist) {
+    
     let display = longLine;
     display = display + "concert-this band requested: " + artist+"\n\n"
 
@@ -90,10 +94,19 @@ function concertThis(artist) {
 
     // This will search the Bands in Town Artist Events API ("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp") for an artist and render the following information about each event to the terminal:
     request("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp", function (error, response, body) {
-        let resultList = JSON.parse(body)
-        //prettyOutput = JSON.stringify(resultList, null, 4)
-        //console.log(prettyOutput)
-        //console.log("-------------------------------------------------------------")
+        
+        
+        try {
+            let resultList = JSON.parse(body)
+        } catch (error) {
+            console.log("Artist Not Found!")
+            return (false)
+        }
+        
+
+        // prettyOutput = JSON.stringify(resultList, null, 4)
+        // console.log(prettyOutput)
+       
         if (resultList.length === 0) {
             console.log("Sorry.  Couldn't find any events by "+artist)
         } else {
@@ -103,7 +116,7 @@ function concertThis(artist) {
                 venueName = resultList[i]["venue"]["name"]
                 // clean up date later   
                 date = resultList[i]['datetime']
-                venueLoc = resultList[i]['venue']['city'] + " " + resultList[i]['venue']['country']
+                venueLoc = resultList[i]['venue']['city'] + ", " + resultList[i]['venue']['country']
                 eventInfo = "Name: " + venueName + "\nLocation: " + venueLoc + "\nDate: " + date + "\n\n";
                 display = display + eventInfo;
             }
@@ -121,7 +134,7 @@ function concertThis(artist) {
 // node liri.js spotify-this-song '<song name here>'
 function spotifySong(song) {
     let display = longLine;
-    display = display + "spotify-this-song Song Requested:" + song+"\n"
+    display = display + "spotify-this-song Song Requested: " + song+"\n\n"
 
     // If no song is provided then your program will default to "The Sign" by Ace of Base.
     if (song === "") {
@@ -221,7 +234,7 @@ function movieThis(movie) {
             let actors = searchResults['Actors']
 
             
-            display = display + "\nTitle: "+title + "\nYear: " + yearOut + "\nIMBD Rating: "+ imdbRating + "\nRotten Tomatoes Rating: " + rottenTomRating + "\nCountry: "+ country + "\nLanguage: " + language + "\nActors: " + actors + "\nPlot: " + plot + "\n\n"
+            display = display + "Title: "+title + "\nYear: " + yearOut + "\nIMBD Rating: "+ imdbRating + "\nRotten Tomatoes Rating: " + rottenTomRating + "\nCountry: "+ country + "\nLanguage: " + language + "\nActors: " + actors + "\nPlot: " + plot + "\n\n"
             console.log(display)
             appendFile(display)
         } else {
