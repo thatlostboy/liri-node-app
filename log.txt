@@ -1,0 +1,297 @@
+----------------------------------------------------------------------------
+concert-this band requested: U2
+
+Name: Mercedes-Benz Arena Berlin
+Location: Berlin Germany
+Date: 2018-08-31T20:00:00
+
+Name: Mercedes-Benz Arena Berlin
+Location: Berlin Germany
+Date: 2018-09-01T20:00:00
+
+Name: Lanxess Arena
+Location: Köln Germany
+Date: 2018-09-04T20:00:00
+
+Name: Lanxess Arena
+Location: Köln Germany
+Date: 2018-09-05T03:30:00
+
+Name: Accorhotels Arena
+Location: Paris France
+Date: 2018-09-08T20:00:00
+
+Name: Accorhotels Arena
+Location: Paris France
+Date: 2018-09-09T20:00:00
+
+Name: Accorhotels Arena
+Location: Paris France
+Date: 2018-09-12T20:00:00
+
+Name: AccorHotels Arena
+Location: Paris 12 France
+Date: 2018-09-13T20:00:00
+
+Name: Altice Arena
+Location: Lisboa Portugal
+Date: 2018-09-16T21:00:00
+
+Name: Altice Arena
+Location: Lisboa Portugal
+Date: 2018-09-17T20:00:00
+
+Name: WiZink Center
+Location: Madrid Spain
+Date: 2018-09-20T21:00:00
+
+Name: WiZink Center
+Location: Madrid Spain
+Date: 2018-09-21T21:00:00
+
+Name: Royal Arena
+Location: København S Denmark
+Date: 2018-09-29T20:00:00
+
+Name: Royal Arena
+Location: København S Denmark
+Date: 2018-09-30T20:00:00
+
+Name: Barclaycard Arena Hamburg
+Location: Hamburg Germany
+Date: 2018-10-03T20:00:00
+
+Name: Barclaycard Arena Hamburg
+Location: Hamburg Germany
+Date: 2018-10-04T20:00:00
+
+Name: Ziggo Dome
+Location: Amsterdam Netherlands
+Date: 2018-10-07T20:00:00
+
+Name: Ziggo Dome
+Location: Amsterdam Netherlands
+Date: 2018-10-08T20:00:00
+
+Name: Mediolanum Forum
+Location: Assago (mi) Italy
+Date: 2018-10-11T19:00:00
+
+Name: Mediolanum Forum
+Location: Assago (mi) Italy
+Date: 2018-10-12T19:00:00
+
+Name: Mediolanum Forum
+Location: Assago (mi) Italy
+Date: 2018-10-15T19:00:00
+
+Name: Mediolanum Forum
+Location: Assago (mi) Italy
+Date: 2018-10-16T19:00:00
+
+Name: Manchester Arena
+Location: Manchester United Kingdom
+Date: 2018-10-19T00:00:00
+
+Name: Manchester Arena
+Location: Manchester United Kingdom
+Date: 2018-10-20T20:01:00
+
+Name: The O2
+Location: London United Kingdom
+Date: 2018-10-23T19:00:00
+
+Name: The O2
+Location: London United Kingdom
+Date: 2018-10-24T20:00:00
+
+Name: SSE Arena
+Location: Belfast United Kingdom
+Date: 2018-10-27T18:30:00
+
+Name: SSE Arena
+Location: Belfast United Kingdom
+Date: 2018-10-28T18:30:00
+
+Name: 3Arena
+Location: Dublin Ireland
+Date: 2018-11-05T18:30:00
+
+Name: 3Arena
+Location: Dublin Ireland
+Date: 2018-11-06T18:30:00
+
+Name: 3Arena
+Location: Dublin Ireland
+Date: 2018-11-09T18:30:00
+
+Name: 3Arena
+Location: Dublin Ireland
+Date: 2018-11-10T18:30:00
+
+----------------------------------------------------------------------------
+concert-this band requested: U2
+
+Name: Mercedes-Benz Arena Berlin
+Location: Berlin Germany
+Date: 2018-08-31T20:00:00
+
+Name: Mercedes-Benz Arena Berlin
+Location: Berlin Germany
+Date: 2018-09-01T20:00:00
+
+Name: Lanxess Arena
+Location: Köln Germany
+Date: 2018-09-04T20:00:00
+
+Name: Lanxess Arena
+Location: Köln Germany
+Date: 2018-09-05T03:30:00
+
+Name: Accorhotels Arena
+Location: Paris France
+Date: 2018-09-08T20:00:00
+
+Name: Accorhotels Arena
+Location: Paris France
+Date: 2018-09-09T20:00:00
+
+Name: Accorhotels Arena
+Location: Paris France
+Date: 2018-09-12T20:00:00
+
+Name: AccorHotels Arena
+Location: Paris 12 France
+Date: 2018-09-13T20:00:00
+
+Name: Altice Arena
+Location: Lisboa Portugal
+Date: 2018-09-16T21:00:00
+
+Name: Altice Arena
+Location: Lisboa Portugal
+Date: 2018-09-17T20:00:00
+
+Name: WiZink Center
+Location: Madrid Spain
+Date: 2018-09-20T21:00:00
+
+Name: WiZink Center
+Location: Madrid Spain
+Date: 2018-09-21T21:00:00
+
+Name: Royal Arena
+Location: København S Denmark
+Date: 2018-09-29T20:00:00
+
+Name: Royal Arena
+Location: København S Denmark
+Date: 2018-09-30T20:00:00
+
+Name: Barclaycard Arena Hamburg
+Location: Hamburg Germany
+Date: 2018-10-03T20:00:00
+
+Name: Barclaycard Arena Hamburg
+Location: Hamburg Germany
+Date: 2018-10-04T20:00:00
+
+Name: Ziggo Dome
+Location: Amsterdam Netherlands
+Date: 2018-10-07T20:00:00
+
+Name: Ziggo Dome
+Location: Amsterdam Netherlands
+Date: 2018-10-08T20:00:00
+
+Name: Mediolanum Forum
+Location: Assago (mi) Italy
+Date: 2018-10-11T19:00:00
+
+Name: Mediolanum Forum
+Location: Assago (mi) Italy
+Date: 2018-10-12T19:00:00
+
+Name: Mediolanum Forum
+Location: Assago (mi) Italy
+Date: 2018-10-15T19:00:00
+
+Name: Mediolanum Forum
+Location: Assago (mi) Italy
+Date: 2018-10-16T19:00:00
+
+Name: Manchester Arena
+Location: Manchester United Kingdom
+Date: 2018-10-19T00:00:00
+
+Name: Manchester Arena
+Location: Manchester United Kingdom
+Date: 2018-10-20T20:01:00
+
+Name: The O2
+Location: London United Kingdom
+Date: 2018-10-23T19:00:00
+
+Name: The O2
+Location: London United Kingdom
+Date: 2018-10-24T20:00:00
+
+Name: SSE Arena
+Location: Belfast United Kingdom
+Date: 2018-10-27T18:30:00
+
+Name: SSE Arena
+Location: Belfast United Kingdom
+Date: 2018-10-28T18:30:00
+
+Name: 3Arena
+Location: Dublin Ireland
+Date: 2018-11-05T18:30:00
+
+Name: 3Arena
+Location: Dublin Ireland
+Date: 2018-11-06T18:30:00
+
+Name: 3Arena
+Location: Dublin Ireland
+Date: 2018-11-09T18:30:00
+
+Name: 3Arena
+Location: Dublin Ireland
+Date: 2018-11-10T18:30:00
+
+----------------------------------------------------------------------------
+movie-this movie Requested:Noah
+Title: Noah
+Year: 2014
+IMBD Rating: 5.8/10
+Rotten Tomatoes Rating: 76%
+Country: USA
+Language: English
+Actors: Russell Crowe, Jennifer Connelly, Ray Winstone, Anthony Hopkins
+Plot: Noah is chosen by God to undertake a momentous mission before an apocalyptic flood cleanses the world.
+
+----------------------------------------------------------------------------
+movie-this movie Requested:Noah
+
+Title: Noah
+Year: 2014
+IMBD Rating: 5.8/10
+Rotten Tomatoes Rating: 76%
+Country: USA
+Language: English
+Actors: Russell Crowe, Jennifer Connelly, Ray Winstone, Anthony Hopkins
+Plot: Noah is chosen by God to undertake a momentous mission before an apocalyptic flood cleanses the world.
+
+----------------------------------------------------------------------------
+movie-this movie Requested: Noah
+
+Title: Noah
+Year: 2014
+IMBD Rating: 5.8/10
+Rotten Tomatoes Rating: 76%
+Country: USA
+Language: English
+Actors: Russell Crowe, Jennifer Connelly, Ray Winstone, Anthony Hopkins
+Plot: Noah is chosen by God to undertake a momentous mission before an apocalyptic flood cleanses the world.
+

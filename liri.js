@@ -16,7 +16,8 @@ var request = require("request");
 // initialize file handler
 var fs = require("fs")
 
-
+//  initialize log file
+var logfile = "./log.txt"
 
 // console.log(apikeys.spotify);
 // console.log("\n\n\n")
@@ -25,6 +26,7 @@ var fs = require("fs")
 
 var nodeArgs = process.argv
 var helpMessage = "Please use one of these four commands\n 1) concert-this\n 2) spotify-this-song\n 3) movie-this\n 4) do-what-it-says\n"
+var longLine = "----------------------------------------------------------------------------\n"
 
 if (nodeArgs.length < 3) {
     console.log("Missing command");
@@ -39,6 +41,13 @@ if (nodeArgs.length < 3) {
     selectChoice(command, commandArgString)
 }
 
+
+// Make it so liri.js can take in one of the following commands:
+
+// concert-this
+// spotify-this-song
+// movie-this
+// do-what-it-says
 
 function selectChoice(command, commandArgString) {
     switch (command) {
@@ -66,22 +75,12 @@ function selectChoice(command, commandArgString) {
 
 
 
-
-// Make it so liri.js can take in one of the following commands:
-
-// concert-this
-// spotify-this-song
-// movie-this
-// do-what-it-says
-
-
-
 // What Each Command Should Do
-
 
 // node liri.js concert-this <artist/band name here>
 function concertThis(artist) {
-    console.log("\nBand Requested: " + artist+"\n");
+    let display = longLine;
+    display = display + "concert-this band requested: " + artist+"\n\n"
 
     // If no band, nothign will be provided
     if (artist === "") {
@@ -98,7 +97,7 @@ function concertThis(artist) {
         if (resultList.length === 0) {
             console.log("Sorry.  Couldn't find any events by "+artist)
         } else {
-            let allresults = ""
+            
             for (let i = 0; i < resultList.length; i++) {
                 let result = ""
                 venueName = resultList[i]["venue"]["name"]
@@ -106,9 +105,11 @@ function concertThis(artist) {
                 date = resultList[i]['datetime']
                 venueLoc = resultList[i]['venue']['city'] + " " + resultList[i]['venue']['country']
                 eventInfo = "Name: " + venueName + "\nLocation: " + venueLoc + "\nDate: " + date + "\n\n";
-                allresults = allresults + eventInfo;
+                display = display + eventInfo;
             }
-            console.log("\n\n" + allresults)
+            console.log("\n\n" + display)
+            appendFile(display)
+
         }
     });
     // Name of the venue
@@ -119,7 +120,8 @@ function concertThis(artist) {
 
 // node liri.js spotify-this-song '<song name here>'
 function spotifySong(song) {
-    console.log("\nSong Requested:" + song+"\n")
+    let display = longLine;
+    display = display + "spotify-this-song Song Requested:" + song+"\n"
 
     // If no song is provided then your program will default to "The Sign" by Ace of Base.
     if (song === "") {
@@ -134,7 +136,7 @@ function spotifySong(song) {
 
         if (data['tracks']['total'] > 1) {
             results = data['tracks']['items']
-            let display = "";
+            
             for (i = 0; i < results.length; i++) {
                 let result = "";
                 // This will show the following information about the song in your terminal/bash window
@@ -148,10 +150,12 @@ function spotifySong(song) {
                 albumName = results[i]['album']['name']
                 prevLink = results[i]['preview_url']
 
-                console.log("Artist: " + artist + "\nSongName: " + songName + "\nAlbum: " + albumName)
-                console.log("Preview Link: " + prevLink + "\n")
-                // console.log(results[i]['album'])
+                result = "Artist: " + artist + "\nSongName: " + songName + "\nAlbum: " + albumName
+                result = result + "\n"+"Preview Link: " + prevLink + "\n"
+                display = display + result + "\n"
             }
+            console.log(display)
+            appendFile(display)
         } else {
             console.log("Sorry. No songs found by the name: "+song)
         }
@@ -165,7 +169,9 @@ function spotifySong(song) {
 
 // node liri.js movie-this '<movie name here>'
 function movieThis(movie) {
-    console.log("\nMovie Info Requested: " + movie+ "\n")
+    let display = longLine;
+    display = display + "movie-this movie Requested: " + movie+"\n\n"
+
     // This will output the following information to your terminal/bash window:
 
     // If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
@@ -181,6 +187,8 @@ function movieThis(movie) {
         // console.log(searchResults);
 
         if (searchResults['Response'] === "True") {
+
+
 
             //    * Title of the movie.
             title = searchResults['Title']
@@ -212,9 +220,10 @@ function movieThis(movie) {
             //    * Actors in the movie.
             let actors = searchResults['Actors']
 
-            console.log(title, yearOut, imdbRating, rottenTomRating, country, language)
-            console.log(actors)
-            console.log(plot)
+            
+            display = display + "Title: "+title + "\nYear: " + yearOut + "\nIMBD Rating: "+ imdbRating + "\nRotten Tomatoes Rating: " + rottenTomRating + "\nCountry: "+ country + "\nLanguage: " + language + "\nActors: " + actors + "\nPlot: " + plot + "\n\n"
+            console.log(display)
+            appendFile(display)
         } else {
             console.log("Sorry.  No Movie found by that name: "+movie)
         }
@@ -238,10 +247,10 @@ function doWhatItSays() {
     fs.readFile("./random.txt", "utf8", function (err, data) {
         //console.log(data);
 
-        if (err !== null) {
+        if (err) {
             console.log("Stopped due to --> " + err)
             return (false)
-        }
+        } 
 
 
         data = data.trim();
@@ -267,6 +276,13 @@ function doWhatItSays() {
 
 }
 
+
+function appendFile (dataStr) {
+    fs.appendFile(logfile, dataStr, function(err){
+        if (err) throw err;
+        console.log("appended to file: "+logfile)
+    })
+}
 
 
 // BONUS
