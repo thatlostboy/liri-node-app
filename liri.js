@@ -152,7 +152,7 @@ function spotifySong(song) {
 
                 result = "Artist: " + artist + "\nSongName: " + songName + "\nAlbum: " + albumName
                 result = result + "\n"+"Preview Link: " + prevLink + "\n"
-                display = display + result + "\n"
+                display = display + result + "\n\n"
             }
             console.log(display)
             appendFile(display)
@@ -221,7 +221,7 @@ function movieThis(movie) {
             let actors = searchResults['Actors']
 
             
-            display = display + "Title: "+title + "\nYear: " + yearOut + "\nIMBD Rating: "+ imdbRating + "\nRotten Tomatoes Rating: " + rottenTomRating + "\nCountry: "+ country + "\nLanguage: " + language + "\nActors: " + actors + "\nPlot: " + plot + "\n\n"
+            display = display + "\nTitle: "+title + "\nYear: " + yearOut + "\nIMBD Rating: "+ imdbRating + "\nRotten Tomatoes Rating: " + rottenTomRating + "\nCountry: "+ country + "\nLanguage: " + language + "\nActors: " + actors + "\nPlot: " + plot + "\n\n"
             console.log(display)
             appendFile(display)
         } else {
