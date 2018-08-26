@@ -81,7 +81,7 @@ function selectChoice(command, commandArgString) {
 
 // node liri.js concert-this <artist/band name here>
 function concertThis(artist) {
-    //console.log("\nIn function: \nHere is your band! " + artist);
+    console.log("\nBand Requested: " + artist+"\n");
 
     // If no band, nothign will be provided
     if (artist === "") {
@@ -119,7 +119,7 @@ function concertThis(artist) {
 
 // node liri.js spotify-this-song '<song name here>'
 function spotifySong(song) {
-    //console.log("\nIn function: \nHere is your song! " + song)
+    console.log("\nSong Requested:" + song+"\n")
 
     // If no song is provided then your program will default to "The Sign" by Ace of Base.
     if (song === "") {
@@ -165,7 +165,7 @@ function spotifySong(song) {
 
 // node liri.js movie-this '<movie name here>'
 function movieThis(movie) {
-    // console.log("\nIn function: \nHere is your movie " + movie)
+    console.log("\nMovie Info Requested: " + movie+ "\n")
     // This will output the following information to your terminal/bash window:
 
     // If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
@@ -202,7 +202,6 @@ function movieThis(movie) {
                 }
 
             }
-
 
             //    * Country where the movie was produced.
             let country = searchResults['Country']
