@@ -1,10 +1,25 @@
 require("dotenv").config();
+
+// load API keys
 var apikeys = require("./keys.js");
+
+// initialize spotify with api keys
 var Spotify = require("node-spotify-api");
 var spotify = new Spotify(apikeys.spotify);
+
+// load omdb api key
+var moviekey = apikeys.omdb;
+
+// initialize request handler
 var request = require("request");
+
+
+
+
+
 console.log(apikeys.spotify);
 console.log("\n\n\n")
+console.log(moviekey)
 console.log("-----begin program\n")
 var nodeArgs = process.argv
 
@@ -15,11 +30,12 @@ if (nodeArgs.length < 3) {
     console.log(helpMessage)
 } else {
 
-    var command = nodeArgs[2]
-    var commandArgString = nodeArgs.slice(3).join(" ");
+    let command = nodeArgs[2]
+    let commandArgString = nodeArgs.slice(3).join(" ");
+    commandArgString = commandArgString.trim()
     console.log("Length: " + nodeArgs.length + "\nCommand: " + command + "\nParameters: " + commandArgString)
 
-    
+
     switch (command) {
         case "concert-this":
             console.log("concert-this");
@@ -59,19 +75,27 @@ if (nodeArgs.length < 3) {
 // node liri.js concert-this <artist/band name here>
 function concertThis(artist) {
     console.log("\nIn function: \nHere is your band! " + artist);
+    if (artist === "") {
+        console.log ("No Band, I can't provide venue information.")
+        return ("just starting all over")
+    }
     // This will search the Bands in Town Artist Events API ("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp") for an artist and render the following information about each event to the terminal:
-    request("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp", function(error,response, body) {
-        locationList = JSON.parse(body)
-        prettyOutput = JSON.stringify(locationList,null,4)
+    request("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp", function (error, response, body) {
+        let resultList = JSON.parse(body)
+        prettyOutput = JSON.stringify(resultList, null, 4)
+        console.log(prettyOutput)
+        console.log("-------------------------------------------------------------")
         let allresults = ""
-        for (let i=0; i<locationList.length; i++) {
+        for (let i = 0; i < resultList.length; i++) {
             let result = ""
-            result = result + locationList[i]["venue"]["name"] + "\n"
+            venueName = resultList[i]["venue"]["name"]
             // clean up date later   
-            result = result + locationList[i]['datetime'] + "\n\n"
-            allresults = allresults + result
+            date = resultList[i]['datetime']
+            venueLoc = resultList[i]['venue']['city'] + " " + resultList[i]['venue']['country']
+            eventInfo = "Name: " + venueName + "\nLocation: " + venueLoc + "\nDate: " + date + "\n\n";
+            allresults = allresults + eventInfo;
         }
-        console.log("\n\n"+allresults)
+        console.log("\n\n" + allresults)
         // console.log(prettyOutput)
     });
     // Name of the venue
@@ -81,25 +105,41 @@ function concertThis(artist) {
 
 
 // node liri.js spotify-this-song '<song name here>'
-function spotifySong(song2) {
+function spotifySong(song) {
     console.log("\nIn function: \nHere is your song! " + song)
-    let artist = "Ace of Base"
-    var song = "I will always love you"
+    if (song === "") {
+        song = "The Sign"
+    }
 
-    spotify.search({type: 'track', query:song, limit: 2},function(err, data) {
-        prettyOutput = JSON.stringify(data, null, 2)
-        console.log(prettyOutput)
+    var searchLimit = 10
+
+    spotify.search({ type: 'track', query: song, limit: searchLimit}, function (err, data) {
+        // console.log(data)
+        // console.log(JSON.stringify(data, null, 2))
+        results = data['tracks']['items']
+        let display = "";
+        for (i = 0; i < results.length; i++) {
+            let result = "";
+            // This will show the following information about the song in your terminal/bash window
+            // Artist(s)
+            // The song's name
+            // A preview link of the song from Spotify
+            // The album that the song is from
+            // If no song is provided then your program will default to "The Sign" by Ace of Base.
+            artist = results[i]['album']["artists"][0]['name']
+            songName = results[i]['name']
+            albumName = results[i]['album']['name']
+            prevLink = results[i]['preview_url']
+
+            console.log("Artist: " + artist + "\nSongName: " + songName + "\nAlbum: " + albumName)
+            console.log("Preview Link: " + prevLink + "\n")
+            // console.log(results[i]['album'])
+        }
     })
-
-
-
-    // This will show the following information about the song in your terminal/bash window
-    // Artist(s)
-    // The song's name
-    // A preview link of the song from Spotify
-    // The album that the song is from
-    // If no song is provided then your program will default to "The Sign" by Ace of Base.
 }
+
+
+
 
 
 // node liri.js movie-this '<movie name here>'
@@ -107,15 +147,50 @@ function movieThis(movie) {
     console.log("\nIn function: \nHere is your movie " + movie)
     // This will output the following information to your terminal/bash window:
 
-    //    * Title of the movie.
-    //    * Year the movie came out.
-    //    * IMDB Rating of the movie.
-    //    * Rotten Tomatoes Rating of the movie.
-    //    * Country where the movie was produced.
-    //    * Language of the movie.
-    //    * Plot of the movie.
-    //    * Actors in the movie.
+    if (movie === "") {
+        movie = "Mr. Nobody"
+    }
 
+    request("http://omdbapi.com?apikey=" + moviekey + "&type=movie&t=" + movie, function (error, response, body) {
+
+        searchResults = JSON.parse(body)
+        console.log(searchResults);
+        //    * Title of the movie.
+        title = searchResults['Title']
+
+        //    * Year the movie came out.
+        yearOut = searchResults['Year']
+
+        //    * IMDB Rating of the movie.   
+        //    * Rotten Tomatoes Rating of the movie.
+        let imdbRating = "N/A"
+        let rottenTomRating = "N/A"
+
+        let ratings = searchResults['Ratings']
+        for (let i = 0; i<ratings.length; i++) {
+            if (ratings[i]['Source'] === 'Internet Movie Database') {
+                imdbRating = ratings[i]['Value']
+            } else if (ratings[i]['Source'] === 'Rotten Tomatoes') {
+                rottenTomRating = ratings[i]['Value']
+            }
+
+        }
+   
+
+        //    * Country where the movie was produced.
+        let country = searchResults['Country']
+        //    * Language of the movie.
+        let language = searchResults['Language']
+        //    * Plot of the movie.
+        let plot = searchResults['Plot']
+        //    * Actors in the movie.
+        let actors = searchResults['Actors']
+
+        console.log(title, yearOut, imdbRating, rottenTomRating, country, language)
+        console.log(actors)
+        console.log(plot)
+        
+    });
 
     // If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
     // If you haven't watched "Mr. Nobody," then you should: http://www.imdb.com/title/tt0485947/
