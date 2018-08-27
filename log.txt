@@ -1,4 +1,23 @@
 ----------------------------------------------------------------------------
+concert-this band requested: One Republic
+
+Name: Safeco Field
+Location: Seattle, United States
+Date: 08/31/2018
+
+----------------------------------------------------------------------------
+movie-this movie Requested: Noah
+
+Title: Noah
+Year: 2014
+IMBD Rating: 5.8/10
+Rotten Tomatoes Rating: 76%
+Country: USA
+Language: English
+Actors: Russell Crowe, Jennifer Connelly, Ray Winstone, Anthony Hopkins
+Plot: Noah is chosen by God to undertake a momentous mission before an apocalyptic flood cleanses the world.
+
+----------------------------------------------------------------------------
 spotify-this-song Song Requested: Connection
 
 Artist: OneRepublic
@@ -60,69 +79,4 @@ SongName: Connection (feat. Fabolous, Davo & Paloma Ford)
 Album: MEMORIES DON'T DIE
 Preview Link: null
 
-
-----------------------------------------------------------------------------
-movie-this movie Requested: Noah
-
-
-Title: Noah
-Year: 2014
-IMBD Rating: 5.8/10
-Rotten Tomatoes Rating: 76%
-Country: USA
-Language: English
-Actors: Russell Crowe, Jennifer Connelly, Ray Winstone, Anthony Hopkins
-Plot: Noah is chosen by God to undertake a momentous mission before an apocalyptic flood cleanses the world.
-
-----------------------------------------------------------------------------
-movie-this movie Requested: Noah
-
-Title: Noah
-Year: 2014
-IMBD Rating: 5.8/10
-Rotten Tomatoes Rating: 76%
-Country: USA
-Language: English
-Actors: Russell Crowe, Jennifer Connelly, Ray Winstone, Anthony Hopkins
-Plot: Noah is chosen by God to undertake a momentous mission before an apocalyptic flood cleanses the world.
-
-----------------------------------------------------------------------------
-concert-this band requested: One Republic
-
-Name: Safeco Field
-Location: Seattle, United States
-Date: 2018-08-31T19:00:00
-
-----------------------------------------------------------------------------
-concert-this band requested: One Republic
-
-Name: Safeco Field
-Location: Seattle, United States
-Date: 2018-08-31T19:00:00
-
-----------------------------------------------------------------------------
-concert-this band requested: One Republic
-
-Name: Safeco Field
-Location: Seattle, United States
-Date: 2018-08-31T19:00:00
-
-----------------------------------------------------------------------------
-concert-this band requested: One Republic
-
-Name: Safeco Field
-Location: Seattle, United States
-Date: 2018-08-31T19:00:00
-
-----------------------------------------------------------------------------
-movie-this movie Requested: Remember the Titans
-
-Title: Remember the Titans
-Year: 2000
-IMBD Rating: 7.8/10
-Rotten Tomatoes Rating: 73%
-Country: USA
-Language: English
-Actors: Denzel Washington, Will Patton, Wood Harris, Ryan Hurst
-Plot: The true story of a newly appointed African-American coach and his high school team on their first season as a racially integrated unit.
 

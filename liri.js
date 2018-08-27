@@ -82,9 +82,9 @@ function selectChoice(command, commandArgString) {
 
 // node liri.js concert-this <artist/band name here>
 function concertThis(artist) {
-    
+
     let display = longLine;
-    display = display + "concert-this band requested: " + artist+"\n\n"
+    display = display + "concert-this band requested: " + artist + "\n\n"
 
     // If no band, nothign will be provided
     if (artist === "") {
@@ -94,47 +94,51 @@ function concertThis(artist) {
 
     // This will search the Bands in Town Artist Events API ("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp") for an artist and render the following information about each event to the terminal:
     request("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp", function (error, response, body) {
-        
-        
+
+
         try {
             let resultList = JSON.parse(body)
+
+            // prettyOutput = JSON.stringify(resultList, null, 4)
+            // console.log(prettyOutput)
+
+            if (resultList.length === 0) {
+                console.log("Sorry.  Couldn't find any events by " + artist)
+            } else {
+                // Name of the venue
+                // Venue location
+                // Date of the Event (use moment to format this as "MM/DD/YYYY")
+                for (let i = 0; i < resultList.length; i++) {
+                    let result = ""
+                    venueName = resultList[i]["venue"]["name"]
+                    date = resultList[i]['datetime']
+                    epochDate = moment(date, "YYYY-MM-DDTHH:mm:ss")
+                    displayDate = epochDate.format("MM/DD/YYYY")
+                    // console.log("-----------> "+ date + " changed to: " + displayDate)
+
+                    venueLoc = resultList[i]['venue']['city'] + ", " + resultList[i]['venue']['country']
+                    eventInfo = "Name: " + venueName + "\nLocation: " + venueLoc + "\nDate: " + displayDate + "\n\n";
+                    display = display + eventInfo;
+                }
+                console.log("\n\n" + display)
+                appendFile(display)
+
+            }
         } catch (error) {
             console.log("Artist Not Found!")
             return (false)
         }
-        
-
-        // prettyOutput = JSON.stringify(resultList, null, 4)
-        // console.log(prettyOutput)
-       
-        if (resultList.length === 0) {
-            console.log("Sorry.  Couldn't find any events by "+artist)
-        } else {
-            
-            for (let i = 0; i < resultList.length; i++) {
-                let result = ""
-                venueName = resultList[i]["venue"]["name"]
-                // clean up date later   
-                date = resultList[i]['datetime']
-                venueLoc = resultList[i]['venue']['city'] + ", " + resultList[i]['venue']['country']
-                eventInfo = "Name: " + venueName + "\nLocation: " + venueLoc + "\nDate: " + date + "\n\n";
-                display = display + eventInfo;
-            }
-            console.log("\n\n" + display)
-            appendFile(display)
-
-        }
     });
-    // Name of the venue
-    // Venue location
-    // Date of the Event (use moment to format this as "MM/DD/YYYY")
+
 }
+
+
 
 
 // node liri.js spotify-this-song '<song name here>'
 function spotifySong(song) {
     let display = longLine;
-    display = display + "spotify-this-song Song Requested: " + song+"\n\n"
+    display = display + "spotify-this-song Song Requested: " + song + "\n\n"
 
     // If no song is provided then your program will default to "The Sign" by Ace of Base.
     if (song === "") {
@@ -149,7 +153,7 @@ function spotifySong(song) {
 
         if (data['tracks']['total'] > 1) {
             results = data['tracks']['items']
-            
+
             for (i = 0; i < results.length; i++) {
                 let result = "";
                 // This will show the following information about the song in your terminal/bash window
@@ -164,13 +168,13 @@ function spotifySong(song) {
                 prevLink = results[i]['preview_url']
 
                 result = "Artist: " + artist + "\nSongName: " + songName + "\nAlbum: " + albumName
-                result = result + "\n"+"Preview Link: " + prevLink + "\n"
+                result = result + "\n" + "Preview Link: " + prevLink + "\n"
                 display = display + result + "\n\n"
             }
             console.log(display)
             appendFile(display)
         } else {
-            console.log("Sorry. No songs found by the name: "+song)
+            console.log("Sorry. No songs found by the name: " + song)
         }
 
     })
@@ -183,7 +187,7 @@ function spotifySong(song) {
 // node liri.js movie-this '<movie name here>'
 function movieThis(movie) {
     let display = longLine;
-    display = display + "movie-this movie Requested: " + movie+"\n\n"
+    display = display + "movie-this movie Requested: " + movie + "\n\n"
 
     // This will output the following information to your terminal/bash window:
 
@@ -233,12 +237,12 @@ function movieThis(movie) {
             //    * Actors in the movie.
             let actors = searchResults['Actors']
 
-            
-            display = display + "Title: "+title + "\nYear: " + yearOut + "\nIMBD Rating: "+ imdbRating + "\nRotten Tomatoes Rating: " + rottenTomRating + "\nCountry: "+ country + "\nLanguage: " + language + "\nActors: " + actors + "\nPlot: " + plot + "\n\n"
+
+            display = display + "Title: " + title + "\nYear: " + yearOut + "\nIMBD Rating: " + imdbRating + "\nRotten Tomatoes Rating: " + rottenTomRating + "\nCountry: " + country + "\nLanguage: " + language + "\nActors: " + actors + "\nPlot: " + plot + "\n\n"
             console.log(display)
             appendFile(display)
         } else {
-            console.log("Sorry.  No Movie found by that name: "+movie)
+            console.log("Sorry.  No Movie found by that name: " + movie)
         }
 
     });
@@ -263,7 +267,7 @@ function doWhatItSays() {
         if (err) {
             console.log("Stopped due to --> " + err)
             return (false)
-        } 
+        }
 
 
         data = data.trim();
@@ -290,10 +294,10 @@ function doWhatItSays() {
 }
 
 
-function appendFile (dataStr) {
-    fs.appendFile(logfile, dataStr, function(err){
+function appendFile(dataStr) {
+    fs.appendFile(logfile, dataStr, function (err) {
         if (err) throw err;
-        console.log("appended to file: "+logfile)
+        console.log("appended to file: " + logfile)
     })
 }
 
